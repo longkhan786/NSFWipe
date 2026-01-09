@@ -27,19 +27,6 @@ A lightweight **video content moderation prototype** that analyzes videos frame-
 
 ---
 
-## 📂 Project Structure
-
-```bash
-.
-├── main.py                # Main script
-├── utils.py               # Helper functions
-├── assets/                # Input videos
-├── generated-files/       # Saved NSFW frames
-└── README.md
-```
-
----
-
 ## ⚙️ Installation
 
 ### 1. Create virtual environment
