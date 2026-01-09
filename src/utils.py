@@ -4,7 +4,7 @@ from PIL import Image
 
 flagged_times = []
 
-def analyze(frame):
+def analyze(frame, timestamp):
 
     frame = cv2.resize(frame, (384, 384))
 
@@ -15,6 +15,7 @@ def analyze(frame):
     for r in results:
         label = r["label"].lower()
         score = r["score"]
+        print(f"Timestamp: {timestamp:.2f}s - {label}: {score:.4f}")
 
         if label == "nsfw" and score >= 0.6:
             return True

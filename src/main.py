@@ -3,7 +3,7 @@ from src.utils import analyze, blur_video
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-input_video = BASE_DIR / "assets" / "toxic-introducing-raya-rocking-star-yash-geetu-mohandas-kvn-productions-monster_mQvG0C8D.mp4"
+input_video = BASE_DIR / "assets" / "Toxic_Introducing_Raya_Rocking_Star_Yash_Geetu_Mohandas_KVN_Productions_Monster_Mind_Creations_360P.mp4"
 output_video = BASE_DIR / "assets" / "blurred_output.mp4"
 
 cap = cv2.VideoCapture(input_video)
@@ -24,7 +24,7 @@ while True:
 
     if frame_index % sample_rate == 0:
         timestamp = frame_index / fps
-        if analyze(frame):
+        if analyze(frame, timestamp):
             flagged_times.append(timestamp)
 
     frame_index += 1
