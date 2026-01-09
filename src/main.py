@@ -1,10 +1,12 @@
 import cv2
-from src.utils import analyze
+from src.utils import analyze, blur_video
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-video_path = BASE_DIR / "assets" / "Toxic_Introducing_Raya_Rocking_Star_Yash_Geetu_Mohandas_KVN_Productions_Monster_Mind_Creations_360P.mp4"
-cap = cv2.VideoCapture(video_path)
+input_video = BASE_DIR / "assets" / "toxic-introducing-raya-rocking-star-yash-geetu-mohandas-kvn-productions-monster_mQvG0C8D.mp4"
+output_video = BASE_DIR / "assets" / "blurred_output.mp4"
+
+cap = cv2.VideoCapture(input_video)
 flagged_times = []
 
 if not cap.isOpened():
@@ -22,14 +24,25 @@ while True:
 
     if frame_index % sample_rate == 0:
         timestamp = frame_index / fps
-        is_nsfw = analyze(frame)
-
-        if is_nsfw:
+        if analyze(frame):
             flagged_times.append(timestamp)
 
     frame_index += 1
 
 cap.release()
 
-print("\n✅ FINAL FLAGGED TIMESTAMPS")
-print(flagged_times)
+def to_ranges(timestamps, padding=0.5):
+    return [(max(0, t - padding), t + padding) for t in timestamps]
+
+
+blur_ranges = to_ranges(flagged_times)
+
+print("Blur rangs:", blur_ranges)
+
+blur_video(
+    str(input_video),
+    str(output_video),
+    blur_ranges
+)
+
+print("Blurred video:", output_video)
