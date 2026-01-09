@@ -27,13 +27,11 @@ def analyze(frame, timestamp):
         score = r["score"]
 
         if label == "nsfw" and score >= 0.6:
-            filename = f"generated-files/frame_{timestamp:.2f}.jpg"
-            image.save(filename)
             flagged_times.append(timestamp)
             break
 
 
-video_path = "assets/Toxic_Introducing_Raya_Rocking_Star_Yash_Geetu_Mohandas_KVN_Productions_Monster_Mind_Creations_1080P.mp4"
+video_path = "assets/converted.mp4"
 cap = cv2.VideoCapture(video_path)
 
 if not cap.isOpened():
