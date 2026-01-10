@@ -4,9 +4,10 @@ from src.models.subtitle import whisper
 import srt
 from datetime import timedelta
 import cv2
+import os
 
 @tool("subtitle_generate_create_output_new_srt_file")
-def subtitle_generate(video_path: str) -> str:
+def subtitle_generate(video_path: str, output_path: str) -> str:
     """
     create audio file from video and generate subtitles
     """
@@ -26,4 +27,5 @@ def subtitle_generate(video_path: str) -> str:
             )
         )
 
-    create_and_update_srt(srt.compose(subtitles))
+    create_and_update_srt(srt.compose(subtitles), output_path)
+    os.remove("temp_audio.wav")
