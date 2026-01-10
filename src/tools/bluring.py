@@ -6,16 +6,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 output_video = BASE_DIR / "assets" / "blurred_output.mp4"
 
-@tool("Video Bluring")
+
+@tool("video_bluring")
 def blur_video(video_path: str) -> str:
     """
-    blur the whole video frame where nudity is detected
-
-    Args:
-        video_path (str): path to the video file
-
-    Returns:
-        str: path to the blurred video file
+    Blur video frames where nudity is detected
     """
 
     cap = cv2.VideoCapture(video_path)
@@ -44,10 +39,6 @@ def blur_video(video_path: str) -> str:
     cap.release()
 
     blur_ranges = to_ranges(flagged_times)
-
     blur(video_path, output_video, blur_ranges)
 
-    return output_video
-
-
-    
+    return str(output_video)
