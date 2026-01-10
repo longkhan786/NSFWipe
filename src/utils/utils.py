@@ -4,7 +4,7 @@ from src.models.nsfw import nsfw_classifier
 import subprocess
 import os
 
-def analyze(frame, timestamp):
+def analyze(frame):
     frame = cv2.resize(frame, (384, 384))
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     image = Image.fromarray(frame)
@@ -62,8 +62,8 @@ def extract_audio(video_path, output_audio="temp_audio.wav"):
 
     return output_audio
 
-def create_and_update_srt(srt_content):
-    with open("output_new.srt", "w", encoding="utf-8") as f:
+def create_and_update_srt(srt_content, output_path):
+    with open(f"{output_path}/output_new.srt", "w", encoding="utf-8") as f:
         f.write(srt_content)
 
     

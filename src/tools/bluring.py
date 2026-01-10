@@ -1,14 +1,10 @@
 from langchain.tools import tool
 from src.utils.utils import blur, to_ranges, analyze
 import cv2
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parent
-output_video = BASE_DIR / "assets" / "blurred_output.mp4"
 
 
 @tool("video_bluring")
-def blur_video(video_path: str) -> str:
+def blur_video(video_path: str, output_path: str) -> str:
     """
     Blur video frames where nudity is detected
     """
@@ -31,7 +27,7 @@ def blur_video(video_path: str) -> str:
 
         if frame_index % sample_rate == 0:
             timestamp = frame_index / fps
-            if analyze(frame, timestamp):
+            if analyze(frame):
                 flagged_times.append(timestamp)
 
         frame_index += 1
@@ -39,6 +35,8 @@ def blur_video(video_path: str) -> str:
     cap.release()
 
     blur_ranges = to_ranges(flagged_times)
-    blur(video_path, output_video, blur_ranges)
+    
+    output_path = f"{output_path}/blurred_output.mp4"
+    blur(video_path, output_path, blur_ranges)
 
-    return str(output_video)
+    return str(output_path)
