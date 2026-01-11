@@ -6,3 +6,5 @@ srt
 faster-whisper
 chromadb
 fastapi
+moviepy
+pysrt

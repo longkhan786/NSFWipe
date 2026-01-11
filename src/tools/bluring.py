@@ -7,6 +7,12 @@ import cv2
 def blur_video(video_path: str, output_path: str) -> str:
     """
     Blur video frames where nudity is detected
+     args:
+        video_path: it means full path of video with video name
+        output_path: it means when video is generated where video will store
+
+    return:
+        it will return the full path of video with video name
     """
 
     cap = cv2.VideoCapture(video_path)
@@ -36,7 +42,7 @@ def blur_video(video_path: str, output_path: str) -> str:
 
     blur_ranges = to_ranges(flagged_times)
     
-    output_path = f"{output_path}/blurred_output.mp4"
+    output_path = f"{output_path}/output_with_blur.mp4"
     blur(video_path, output_path, blur_ranges)
 
     return str(output_path)
