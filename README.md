@@ -71,7 +71,7 @@ The script will:
 
 ## ⚠️ Notes
 
-* This project detects **only nudity/sexual content**
+* This project detects **nudity/sexual content**
 * Violence, blood, weapons, or audio-based moderation are **not included**
 * Frame sampling may miss very short scenes
 * Intended for **learning and experimentation**, not production use
