@@ -24,6 +24,7 @@ def to_ranges(timestamps, padding=0.5):
     return [(max(0, t - padding), t + padding) for t in timestamps]
 
 def blur(input_path, output_path, blur_ranges):
+
     cap = cv2.VideoCapture(input_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
 
@@ -54,6 +55,7 @@ def blur(input_path, output_path, blur_ranges):
     out.release()
 
 def extract_audio(video_path, output_audio="temp_audio.wav"):
+
     command = ["ffmpeg", "-y", "-i", video_path, "-ac", "1", "-ar", "16000", output_audio]
     subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
@@ -65,6 +67,8 @@ def extract_audio(video_path, output_audio="temp_audio.wav"):
 def create_and_update_srt(srt_content, output_path):
     with open(f"{output_path}/output_new.srt", "w", encoding="utf-8") as f:
         f.write(srt_content)
+
+    return f"{output_path}/output_new.srt"
 
     
 
