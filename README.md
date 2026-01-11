@@ -1,6 +1,6 @@
 # 🎥 Video Compliance Bot
 
-A lightweight **video content moderation prototype** that analyzes videos frame-by-frame to detect **NSFW (nudity/sexual) content**. This project is focused strictly on **current, working functionality** and is designed to run on **CPU-only, low-RAM machines**.
+A lightweight **video content moderation prototype** that analyzes videos frame-by-frame to detect **NSFW (nudity/sexual) content** and add blur to the video + generated subtitle and add to the video. This project is focused strictly on **current, working functionality** and is designed to run on **CPU-only, low-RAM machines**.
 
 ---
 
