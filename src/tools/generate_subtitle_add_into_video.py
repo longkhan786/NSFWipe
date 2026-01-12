@@ -38,7 +38,6 @@ def subtitle_generate(video_path: str, output_path: str) -> str:
         )
 
     subititle_srt_file_path = create_and_update_srt(srt.compose(subtitles), output_path)
-    print(subititle_srt_file_path)
 
     selected_video = VideoFileClip(video_path)
     
