@@ -8,3 +8,4 @@ chromadb
 fastapi
 moviepy
 pysrt
+python-multipart
