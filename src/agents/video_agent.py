@@ -17,3 +17,18 @@ def run_full_pipeline(video_path: str, output_path: str):
     })
 
     return response
+
+def run_dubb_pipeline(video_path: str, output_path: str):
+    response = agent.invoke({
+        "messages": [
+            HumanMessage(
+                content=f"""
+                Step 1: dubb the video in a hindi language.
+                input_video: {video_path}
+                output_dir: {output_path}
+                """
+            )
+        ]
+    })
+
+    return response

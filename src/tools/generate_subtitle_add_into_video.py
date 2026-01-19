@@ -1,5 +1,5 @@
 from langchain.tools import tool
-from src.utils.utils import extract_audio, create_and_update_srt
+from src.utils.utils import extract_audio, create_srt_file_using_audio
 from src.models.subtitle import whisper
 import srt
 from datetime import timedelta
@@ -23,21 +23,7 @@ def subtitle_generate(video_path: str, output_path: str) -> str:
     print(f"subtitle_generate_create_output_new_srt_file \n video path:{video_path} \n output_path: {output_path}")
     audio_file = extract_audio(video_path)
 
-    segments, info = whisper.transcribe(audio_file)
-    segments = list(segments)
-
-    subtitles = []
-    for i, segment in enumerate(segments, start=1):
-        subtitles.append(
-            srt.Subtitle(
-                index=i,
-                start=timedelta(seconds=segment.start),
-                end=timedelta(seconds=segment.end),
-                content=segment.text.strip()
-            )
-        )
-
-    subititle_srt_file_path = create_and_update_srt(srt.compose(subtitles), output_path)
+    subititle_srt_file_path = create_srt_file_using_audio(audio_file, output_path)
 
     selected_video = VideoFileClip(video_path)
     

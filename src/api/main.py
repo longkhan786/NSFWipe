@@ -8,7 +8,7 @@ import shutil
 
 from src.jobs.store import create_job, update_job, get_job
 from src.utils.cleanup import cleanup_old_outputs
-from src.agents.video_agent import run_full_pipeline
+from src.agents.video_agent import run_full_pipeline, run_dubb_pipeline
 
 
 app = FastAPI()
@@ -61,6 +61,38 @@ def process_pipeline(job_id: str, video_path: Path):
     except Exception as e:
         update_job(job_id, "FAILED", str(e))
 
+
+@app.post("/dubb-video")
+async def dubb_video(background_tasks: BackgroundTasks, file: UploadFile):
+    job_id = create_job()
+    input_path = OUTPUT_DIR / f"{job_id}_{file.filename}"
+
+    with open(input_path, "wb") as f:
+        shutil.copyfileobj(file.file, f)
+
+    background_tasks.add_task(
+        process_dubb_pipeline,
+        job_id,
+        input_path
+    )
+
+    return {"job_id": job_id}
+
+
+def process_dubb_pipeline(job_id: str, video_path: Path):
+    try:
+        update_job(job_id, "PROCESSING")
+
+        run_dubb_pipeline(
+            video_path=str(video_path),
+            output_path=str(OUTPUT_DIR)
+        )
+
+        final_output = OUTPUT_DIR / "dubb_output.mp4"
+        update_job(job_id, "COMPLETED", str(final_output))
+
+    except Exception as e:
+        update_job(job_id, "FAILED", str(e))
 
 @app.get("/status/{job_id}")
 def status(job_id: str):
